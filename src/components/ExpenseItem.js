@@ -3,9 +3,9 @@ import { AppContext } from "../context/AppProvider";
 import styles from "../style_modules/ExpenseItem.module.css";
 
 export const ExpenseItem = (props) => {
-  const { expenses, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
-  const increaseBudget = () => {
+  const increaseExpense = () => {
     const data = {
       name: props.name,
       cost: props.amount,
@@ -36,15 +36,15 @@ export const ExpenseItem = (props) => {
       <td>{props.name}</td>
       <td>{props.cost}</td>
       <td>
-        <i className="material-icons" onClick={increaseBudget}>
+        <i className="material-icons" onClick={increaseExpense}>
           &#xe146;
         </i>{" "}
-        <i className="material-icons" onClick={deleteField}>
+        <i className="material-icons" onClick={clearExpense}>
           &#xf230;
         </i>
       </td>
       <td>
-        <i className="material-icons" onClick={clearExpense}>
+        <i className="material-icons" onClick={deleteField}>
           &#xe872;
         </i>
       </td>

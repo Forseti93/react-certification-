@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { LabledSelect } from "./LabledSelect";
-import { AppContext, actions, ACTION_TYPES } from "../context/AppProvider";
+import { LabeledSelect } from "./LabledSelect";
+import { AppContext, actions } from "../context/AppProvider";
 import { LabledInput } from "./LabledInput";
 
 const AllocationForm = () => {
-  const { expenses, dispatch, budget, remainingLow } = useContext(AppContext);
-  const [item, setItem] = useState(expenses[0].name);
+  const { expenses, dispatch, budget } = useContext(AppContext);
+  const [expenseName, setExpenseName] = useState(expenses[0].name);
   const [action, setAction] = useState(actions[0]);
   const [number, setNumber] = useState("");
 
@@ -37,7 +37,7 @@ const AllocationForm = () => {
     const value = event.target.value;
     switch (label) {
       case "Item":
-        setItem(value);
+        setExpenseName(value);
         break;
       case "Action":
         setAction(value);
@@ -47,50 +47,47 @@ const AllocationForm = () => {
           setNumber(value);
         } else {
           handleErrorVisualization(300);
-          /*  dispatch({
-            type: "TOGGLE_REMAINING_LOW",
-            payload: true,
-          }); */
-
-          // handleErrorVisualization(3000);
           setNumber((prev) => prev);
         }
         break;
+
+      default:
+        return console.log(
+          `See the handleChange function in the AllocationForm`
+        );
     }
   };
 
   // to update state, depending on select elements
   const submitHandler = () => {
     const data = {
-      name: item,
+      name: expenseName,
       cost: +number,
     };
     switch (action) {
-      case "add monthly budget":
+      case actions[0]:
+        // "add monthly budget"
         dispatch({
           type: "ADD_EXPENSE",
           payload: data,
         });
         break;
-      case "minus monthly budget":
+      case actions[1]:
+        // "minus monthly budget"
         dispatch({
           type: "ADD_EXPENSE",
           payload: { ...data, cost: -data.cost },
         });
         break;
-      case "add monthly budget":
-        dispatch({
-          type: "ADD_EXPENSE",
-          payload: data.name,
-        });
-        break;
-      case "clear monthly budget":
+      case actions[2]:
+        // "clear monthly budget"
         dispatch({
           type: "DELETE_EXPENSE",
           payload: data.name,
         });
         break;
-      case "set monthly budget":
+      case actions[3]:
+        // "set monthly budget"
         dispatch({
           type: "DELETE_EXPENSE",
           payload: data.name,
@@ -100,6 +97,9 @@ const AllocationForm = () => {
           payload: data,
         });
         break;
+
+      default:
+        return console.log(`see the submitHandler function in Allocation form`);
     }
   };
 
@@ -109,15 +109,15 @@ const AllocationForm = () => {
       <div className="container mt-3">
         <div className="row">
           <div className="col-md mt-2">
-            <LabledSelect
+            <LabeledSelect
               type="text"
-              value={item}
+              value={expenseName}
               label={"Item"}
               handleChange={handleChange}
             />
           </div>
           <div className="col-md mt-2">
-            <LabledSelect
+            <LabeledSelect
               type="text"
               value={action}
               label={"Action"}

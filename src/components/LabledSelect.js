@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { ACTION_TYPES, AppContext } from "../context/AppProvider";
+import { AppContext } from "../context/AppProvider";
 
-export const LabledSelect = (props) => {
+export const LabeledSelect = (props) => {
   const { expenses } = useContext(AppContext);
 
   const options = () => {
@@ -22,8 +22,16 @@ export const LabledSelect = (props) => {
             </option>
           );
         });
+
+      default:
+        return "nothing";
     }
   };
+
+  const labelString = ((e) => {
+    if (e.length === 0) return "Please, add new item";
+    return e[0].name;
+  })(expenses);
 
   return (
     <div className="input-group">
@@ -34,7 +42,7 @@ export const LabledSelect = (props) => {
         className="form-select"
         id="inputGroupSelect01"
         onChange={(e) => props.handleChange(e, props.label)}
-        defaultValue={expenses[0].name}
+        defaultValue={labelString}
       >
         {options()}
       </select>

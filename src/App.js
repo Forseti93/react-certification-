@@ -2,20 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Budget from "./components/Budget";
-import { AppContext, AppProvider } from "./context/AppProvider";
+import { AppContext } from "./context/AppProvider";
 import { TestTheme } from "./components/TestTheme";
 import { Remaining } from "./components/Remaining";
 import { ExpenseTotal } from "./components/ExpenseTotal";
 import { ExpenseList } from "./components/ExpenseList";
 import { ThemeContext } from "./context/ThemeProvider";
 import AllocationForm from "./components/AllocationForm";
-import { styles } from "./App.css";
+import "./App.css"
 
 const App = () => {
   const { backgroundColor, color, nightMode } = useContext(ThemeContext);
   const { expenses, budget } = useContext(AppContext);
 
-  const [remainings, setRemainings] = useState();
+  const [remaining, setRemainings] = useState();
   useEffect(() => {
     const remainingBudget = expenses.reduce((acc, val) => {
       return acc - val.cost;
@@ -34,8 +34,8 @@ const App = () => {
     updateCssVariable(htmlEl, "--color-context", color);
     updateCssVariable(bodyEl, "--background-context", backgroundColor);
     updateCssVariable(bodyEl, "--color-context", color);
+    // eslint-disable-next-line
   }, [nightMode]);
-
   return (
     <>
       <TestTheme />
@@ -48,7 +48,7 @@ const App = () => {
           <div className="row">
             {/* Add Budget component here under */}
             <div className="col-md mt-2">
-              <Budget />
+              <Budget className={`${remaining}`}/>
             </div>
             {/* Add ExpenseTotal component here under */}
             <div className="col-md mt-2">
@@ -56,7 +56,7 @@ const App = () => {
             </div>
             {/* Add Remaining component here under */}
             <div className={`col-md mt-2 `}>
-              <Remaining className={`info-box ${remainings}`} />
+              <Remaining className={`info-box ${remaining}`} />
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ const App = () => {
           <ExpenseList />
         </div>
         {/* Add AllocationForm component here under */}
-        <AllocationForm />
+        {expenses.length !== 0 && <AllocationForm />}
       </div>
     </>
   );

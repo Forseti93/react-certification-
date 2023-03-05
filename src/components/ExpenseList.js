@@ -32,7 +32,7 @@ export const ExpenseList = () => {
                 onClick={() => setAmount(100)}
                 style={{ textDecoration: "underline" }}
               >
-               default
+                default
               </span>
             </th>
             <th scope="col" style={{ textAlign: "center" }}>
@@ -42,19 +42,19 @@ export const ExpenseList = () => {
         </thead>
         <tbody>
           {expenses.map((el) => {
-            // {id: "Marketing", name: "Marketing", cost: 50 }
-            const { name, cost, id } = el;
-            return (
-              <ExpenseItem
-                name={name}
-                cost={cost}
-                key={id}
-                id={id}
-                amount={amount}
-              />
-            );
-          })}
-          <AddExpenseItem/>
+              // {id: "Marketing", name: "Marketing", cost: 50 }
+              const { name, cost, id } = el;
+              return (
+                <ExpenseItem
+                  name={name}
+                  cost={cost}
+                  key={id}
+                  id={id}
+                  amount={amount}
+                />
+              );
+            })}
+          <AddExpenseItem />
         </tbody>
       </table>
     </div>

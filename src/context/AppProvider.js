@@ -53,7 +53,10 @@ export const AppProvider = (props) => {
   return (
     <AppContext.Provider
       value={{
-        ...state,
+        budget: state.budget,
+        expenses: state.expenses,
+        currency: state.currency,
+        remainingLow: state.remainingLow,
         remaining: remaining,
         dispatch,
       }}
@@ -65,7 +68,6 @@ export const AppProvider = (props) => {
 
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
-  console.log("AppReducer");
   let budget = 0;
   switch (action.type) {
     case ACTION_TYPES[0]:
@@ -95,12 +97,18 @@ export const AppReducer = (state, action) => {
       }
     case ACTION_TYPES[1]:
       // "CLEAR_EXPENSE"
-      const newExpenses = state.expenses.filter(
-        (expense) => expense.name !== action.payload
-      );
+      // action.type = "DONE";
+      state.expenses.map((currentExp) => {
+        if (currentExp.name === action.payload) {
+          // budget = state.budget + currentExp.cost;
+          currentExp.cost = 0;
+        }
+        return currentExp;
+      });
+      // action.type = "DONE";
       return {
         ...state,
-        expenses: newExpenses,
+        // budget,
       };
     case ACTION_TYPES[2]:
       // "RED_EXPENSE"
@@ -121,64 +129,49 @@ export const AppReducer = (state, action) => {
       };
     case ACTION_TYPES[3]:
       // "DELETE_EXPENSE"
-      // action.type = "DONE";
-      state.expenses.map((currentExp) => {
-        if (currentExp.name === action.payload) {
-          budget = state.budget + currentExp.cost;
-          currentExp.cost = 0;
-        }
-        return currentExp;
-      });
-      // action.type = "DONE";
+      const newExpenses = state.expenses.filter(
+        (expense) => expense.name !== action.payload
+      );
       return {
         ...state,
-        budget,
+        expenses: newExpenses,
       };
     case ACTION_TYPES[4]:
       // "SET_BUDGET"
       // action.type = "DONE";
-      state.budget = action.payload;
-
+      budget =  action.payload
       return {
         ...state,
+        budget,
       };
     case ACTION_TYPES[5]:
       // "CHG_CURRENCY"
       // action.type = "DONE";
-      state.currency = action.payload;
       return {
         ...state,
+        currency: action.payload,
       };
     case ACTION_TYPES[6]:
       // "ADD_NEW_EXPENSE"
-      console.log("ACTION_TYPES[6]");
-
-      // action.type = "DONE";
-      state.expenses = [...state.expenses, action.payload];
-      console.log(state.expenses);
       const remainings = state.expenses.reduce((budget, expense) => {
         return budget - +expense;
       }, state.budget);
-      state.remaining = state.budget - remainings;
+      // action.type = "DONE";
       return {
         ...state,
+        remaining: state.budget - remainings,
+        expenses: [...state.expenses, action.payload],
       };
     case ACTION_TYPES[7]:
       // "TOGGLE_REMAINING_LOW"
       // action.type = "DONE";
-      state.remainingLow = action.payload;
+      return {
+        ...state,
+        remainingLow: action.payload,
+      };
+    default:
       return {
         ...state,
       };
-
-    default:
-      /*       console.log(state.remainingLow);
-      if (state.remainingLow) {
-        setTimeout(() => {
-          state.remainingLow = false;
-        }, 300);
-      } */
-
-      return state;
   }
 };
