@@ -4,14 +4,12 @@ import { AppContext } from "../context/AppProvider";
 const Budget = () => {
   const { budget, dispatch, expenses } = useContext(AppContext);
 
-  const expensesLessBudget = () => {
-    const allExpenses = expenses.reduce((sum, val) => {
-      return sum + +val.cost;
-    }, 0);
-    console.log("allExpenses: ",allExpenses);
-    console.log("budget: ",budget);
+  const allExpenses = expenses.reduce((sum, val) => {
+    return sum + +val.cost;
+  }, 0);
 
-    return allExpenses <= budget;
+  const isBudgetMoreExpenses = (value) => {
+    return allExpenses <= value;
   };
 
   const updateBudget = (e) => {
@@ -19,15 +17,19 @@ const Budget = () => {
       type: "SET_BUDGET",
       payload: e.target.value,
     });
-    
-    if (!expensesLessBudget()) {
+
+    if (!isBudgetMoreExpenses(e.target.value)) {
       console.log("set low");
       dispatch({
         type: "TOGGLE_REMAINING_LOW",
         payload: true,
       });
-      // to focus on input and disable other options
-    } else {
+      dispatch({
+        type: "SET_BUDGET",
+        payload: allExpenses,
+      });
+    } 
+    else {
       console.log("set not low");
 
       dispatch({

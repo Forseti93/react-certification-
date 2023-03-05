@@ -23,7 +23,7 @@ export const actions = [
 
 // 1. Sets the initial state when the app loads
 const initialState = {
-  budget: 25000,
+  budget: 10000,
   expenses: [
     { id: nanoid(), name: "Gas", cost: 1700 },
     { id: nanoid(), name: "Electricity", cost: 300 },
@@ -69,6 +69,7 @@ export const AppProvider = (props) => {
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
   let budget = 0;
+
   switch (action.type) {
     case ACTION_TYPES[0]:
       // "ADD_EXPENSE"
@@ -139,7 +140,11 @@ export const AppReducer = (state, action) => {
     case ACTION_TYPES[4]:
       // "SET_BUDGET"
       // action.type = "DONE";
-      budget =  action.payload
+      if (action.payload > 20000) {
+        budget = 20000;
+      } else {
+        budget = action.payload;
+      }
       return {
         ...state,
         budget,

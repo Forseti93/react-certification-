@@ -15,13 +15,6 @@ const AllocationForm = () => {
       type: "TOGGLE_REMAINING_LOW",
       payload: true,
     });
-
-    setTimeout(() => {
-      dispatch({
-        type: "TOGGLE_REMAINING_LOW",
-        payload: false,
-      });
-    }, errorToShowMS);
   };
 
   // to check, does the new expense has appropriate cost
