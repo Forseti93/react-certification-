@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
+import { CurrencySymbol } from "./CurrencySymbol";
 
 export const LabledInput = (props) => {
   return (
@@ -18,6 +19,9 @@ export const LabledInput = (props) => {
         aria-describedby="basic-addon1"
         onChange={(e) => props.handleChange(e, props.label)}
       />
+      <span className="input-group-text" id="basic-addon1">
+        <CurrencySymbol />
+      </span>
     </div>
   );
 };

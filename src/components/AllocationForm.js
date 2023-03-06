@@ -75,14 +75,14 @@ const AllocationForm = () => {
       case actions[2]:
         // "clear monthly budget"
         dispatch({
-          type: "DELETE_EXPENSE",
+          type: "CLEAR_EXPENSE",
           payload: data.name,
         });
         break;
       case actions[3]:
         // "set monthly budget"
         dispatch({
-          type: "DELETE_EXPENSE",
+          type: "CLEAR_EXPENSE",
           payload: data.name,
         });
         dispatch({

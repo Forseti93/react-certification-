@@ -1,8 +1,9 @@
+import { nanoid } from "nanoid";
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
 
 export const LabeledSelect = (props) => {
-  const { expenses } = useContext(AppContext);
+  const { expenses, currencies } = useContext(AppContext);
 
   const options = () => {
     switch (props.label) {
@@ -22,16 +23,19 @@ export const LabeledSelect = (props) => {
             </option>
           );
         });
+      case "Currency":
+        return Object.keys(currencies).map((key) => {
+          return (
+            <option value={key} key={nanoid()}>
+              {`${currencies[key].symbol} ${key}`}
+            </option>
+          );
+        });
 
       default:
         return "nothing";
     }
   };
-
-  const labelString = ((e) => {
-    if (e.length === 0) return "Please, add new item";
-    return e[0].name;
-  })(expenses);
 
   return (
     <div className="input-group">
@@ -39,10 +43,10 @@ export const LabeledSelect = (props) => {
         {props.label}
       </label>
       <select
+        value={props.value}
         className="form-select"
         id="inputGroupSelect01"
         onChange={(e) => props.handleChange(e, props.label)}
-        defaultValue={labelString}
       >
         {options()}
       </select>

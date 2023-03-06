@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { AppContext } from "../context/AppProvider";
 import cn from "classnames";
 import styles from "../style_modules/Remaining.module.css";
+import { CurrencySymbol } from "./CurrencySymbol";
 
 export const Remaining = ({ className }) => {
   const { expenses, budget, remainingLow, dispatch } = useContext(AppContext);
@@ -26,7 +27,7 @@ export const Remaining = ({ className }) => {
 
   return (
     <div className={cn(className, { [styles.redBorderShaking]: remainingLow })}>
-      Remaining: {remainingBudget}
+      Remaining: {remainingBudget} <CurrencySymbol/>
     </div>
   );
 };

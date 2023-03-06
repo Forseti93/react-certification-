@@ -9,7 +9,8 @@ import { ExpenseTotal } from "./components/ExpenseTotal";
 import { ExpenseList } from "./components/ExpenseList";
 import { ThemeContext } from "./context/ThemeProvider";
 import AllocationForm from "./components/AllocationForm";
-import "./App.css"
+import "./App.css";
+import { Currency } from "./components/Currency";
 
 const App = () => {
   const { backgroundColor, color, nightMode } = useContext(ThemeContext);
@@ -48,15 +49,18 @@ const App = () => {
           <div className="row">
             {/* Add Budget component here under */}
             <div className="col-md mt-2">
-              <Budget className={`${remaining}`}/>
+              <Budget className={`${remaining}`} />
             </div>
             {/* Add ExpenseTotal component here under */}
             <div className="col-md mt-2">
               <ExpenseTotal className="info-box primary" />
             </div>
             {/* Add Remaining component here under */}
-            <div className={`col-md mt-2 `}>
+            <div className={"col-md mt-2"}>
               <Remaining className={`info-box ${remaining}`} />
+            </div>
+            <div className={"col-md mt-2"}>
+              <Currency className={"info-box sucess"} />
             </div>
           </div>
         </div>

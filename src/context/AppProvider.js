@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from "react";
 import { nanoid } from "nanoid";
+import { popularCurrencies } from "../data/popular-currencies";
 
 // actions to send on the dispatch
 export const ACTION_TYPES = [
@@ -29,7 +30,8 @@ const initialState = {
     { id: nanoid(), name: "Electricity", cost: 300 },
     { id: nanoid(), name: "Water", cost: 400 },
   ],
-  currency: "£",
+  currency: popularCurrencies.USD.symbol,
+  currencies: popularCurrencies,
   remainingLow: false,
 };
 
@@ -55,6 +57,7 @@ export const AppProvider = (props) => {
       value={{
         budget: state.budget,
         expenses: state.expenses,
+        currencies: state.currencies,
         currency: state.currency,
         remainingLow: state.remainingLow,
         remaining: remaining,
@@ -74,8 +77,8 @@ export const AppReducer = (state, action) => {
     case ACTION_TYPES[0]:
       // "ADD_EXPENSE"
       let total_budget = 0;
-      total_budget = state.expenses.reduce((previousExp, currentExp) => {
-        return previousExp + currentExp.cost;
+      total_budget = state.expenses.reduce((summa, currentExp) => {
+        return summa + currentExp.cost;
       }, 0);
       total_budget = total_budget + action.payload.cost;
       // action.type = "DONE";

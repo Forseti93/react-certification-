@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
+import { CurrencySymbol } from "./CurrencySymbol";
 import styles from "../style_modules/ExpenseItem.module.css";
 
 export const ExpenseItem = (props) => {
@@ -34,7 +35,7 @@ export const ExpenseItem = (props) => {
   return (
     <tr className={styles.tableRow}>
       <td>{props.name}</td>
-      <td>{props.cost}</td>
+      <td>{props.cost}<CurrencySymbol/></td>
       <td>
         <i className="material-icons" onClick={increaseExpense}>
           &#xe146;

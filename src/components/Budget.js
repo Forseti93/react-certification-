@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
+import { CurrencySymbol } from "./CurrencySymbol";
 
 const Budget = () => {
   const { budget, dispatch, expenses } = useContext(AppContext);
@@ -28,8 +29,7 @@ const Budget = () => {
         type: "SET_BUDGET",
         payload: allExpenses,
       });
-    } 
-    else {
+    } else {
       console.log("set not low");
 
       dispatch({
@@ -41,8 +41,10 @@ const Budget = () => {
 
   return (
     <div className="input-group">
+      {/* can be changed on the LabeledInput component */}
       <span className="input-group-text" id="basic-addon1">
         Budget:
+        <CurrencySymbol />
       </span>
       <input
         value={budget}

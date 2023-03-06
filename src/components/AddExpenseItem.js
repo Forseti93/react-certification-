@@ -29,13 +29,14 @@ export const AddExpenseItem = () => {
   };
 
   const handleAddExpense = () => {
-    const { id, name, cost } = newExpense;
-    if (id || name || cost) {
+    const { name, cost } = newExpense;
+    if (name && cost) {
       dispatch({
         type: "ADD_NEW_EXPENSE",
         payload: { ...newExpense, id: nanoid() },
       });
-    }
+      setItemIsAdding(false);
+    } else return;
     setNewExpense({ id: "", name: "", cost: null });
   };
 

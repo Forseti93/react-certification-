@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppProvider";
+import { CurrencySymbol } from "./CurrencySymbol";
+
 
 export const ExpenseTotal = ({className}) => {
   const { expenses } = useContext(AppContext);
@@ -8,6 +10,6 @@ export const ExpenseTotal = ({className}) => {
   }, 0);
 
   return (
-      <div className={className}>Total expenses: {allExpenses}</div>
+      <div className={className}>Total expenses: {allExpenses} <CurrencySymbol /></div>
   );
 };
