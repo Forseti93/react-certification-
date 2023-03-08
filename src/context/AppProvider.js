@@ -12,6 +12,7 @@ export const ACTION_TYPES = [
   "CHG_CURRENCY",
   "ADD_NEW_EXPENSE",
   "TOGGLE_REMAINING_LOW",
+  "DECREASE_EXPENSE",
 ];
 
 // actions to display for a user
@@ -72,6 +73,7 @@ export const AppProvider = (props) => {
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
   let budget = 0;
+  const maxBudget = 20000;
 
   switch (action.type) {
     case ACTION_TYPES[0]:
@@ -143,11 +145,13 @@ export const AppReducer = (state, action) => {
     case ACTION_TYPES[4]:
       // "SET_BUDGET"
       // action.type = "DONE";
-      if (action.payload > 20000) {
-        budget = 20000;
-      } else {
+      
+      // if (action.payload > maxBudget) {
+      //   budget = maxBudget;
+      //   alert(`Maximum value for a budget is ${maxBudget}`);
+      // } else {
         budget = action.payload;
-      }
+      // }
       return {
         ...state,
         budget,
@@ -177,6 +181,21 @@ export const AppReducer = (state, action) => {
         ...state,
         remainingLow: action.payload,
       };
+    case ACTION_TYPES[8]:
+      // "DECREASE_EXPENSE"
+      state.expenses.map((currentExp) => {
+        if (currentExp.name === action.payload.name) {
+          if (action.payload.cost + currentExp.cost < 0) {
+            alert("Cannot decrease the allocation! It will be less than 0");
+            return {
+              ...state,
+            };
+          } else {
+            currentExp.cost = action.payload.cost + currentExp.cost;
+            return currentExp;
+          }
+        }
+      });
     default:
       return {
         ...state,

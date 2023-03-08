@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppProvider";
 import { ThemeContext } from "../context/ThemeProvider";
 import { AddExpenseItem } from "./AddExpenseItem";
-import { CurrencySymbol } from "./CurrencySymbol";
 import { ExpenseItem } from "./ExpenseItem";
 
 export const ExpenseList = () => {
-  const [amount, setAmount] = useState(100);
+  const [amount, setAmount] = useState(10);
   const { backgroundColor, color } = useContext(ThemeContext);
   const { expenses } = useContext(AppContext);
 
@@ -21,24 +20,22 @@ export const ExpenseList = () => {
             <th scope="col">Item</th>
             <th scope="col">Monthly budget</th>
             <th scope="col" style={{ textAlign: "center" }}>
-              +
               <span
                 style={{ textDecoration: "underline" }}
-                onClick={() => setAmount((prev) => prev + 100)}
+                onClick={() => setAmount((prev) => prev + 10)}
               >
                 {amount}
-                <CurrencySymbol />
               </span>
-              /
+              &nbsp;/&nbsp;
               <span
-                onClick={() => setAmount(100)}
+                onClick={() => setAmount(10)}
                 style={{ textDecoration: "underline" }}
-              > 
-                reset
+              >
+                Reset
               </span>
             </th>
             <th scope="col" style={{ textAlign: "center" }}>
-              Delete
+              Clear / Delete
             </th>
           </tr>
         </thead>

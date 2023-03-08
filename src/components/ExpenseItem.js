@@ -18,6 +18,18 @@ export const ExpenseItem = (props) => {
     });
   };
 
+  const decreaseExpense = () => {
+    const data = {
+      name: props.name,
+      cost: props.amount,
+    };
+
+    dispatch({
+      type: "DECREASE_EXPENSE",
+      payload: { ...data, cost: -props.amount },
+    });
+  };
+
   const deleteField = () => {
     dispatch({
       type: "DELETE_EXPENSE",
@@ -35,16 +47,22 @@ export const ExpenseItem = (props) => {
   return (
     <tr className={styles.tableRow}>
       <td>{props.name}</td>
-      <td>{props.cost}<CurrencySymbol/></td>
+      <td>
+        {props.cost}
+        <CurrencySymbol />
+      </td>
       <td>
         <i className="material-icons" onClick={increaseExpense}>
           &#xe146;
         </i>{" "}
-        <i className="material-icons" onClick={clearExpense}>
-          &#xf230;
+        <i className="material-icons" onClick={decreaseExpense}>
+          &#xe909;
         </i>
       </td>
       <td>
+        <i className="material-icons" onClick={clearExpense}>
+          &#xf230;
+        </i>{" "}
         <i className="material-icons" onClick={deleteField}>
           &#xe872;
         </i>

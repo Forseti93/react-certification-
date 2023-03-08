@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { LabeledSelect } from "./LabledSelect";
 import { AppContext, actions } from "../context/AppProvider";
-import { LabledInput } from "./LabledInput";
+import { LabeledInput } from "./LabeledInput";
 
 const AllocationForm = () => {
   const { expenses, dispatch, budget } = useContext(AppContext);
@@ -96,6 +96,17 @@ const AllocationForm = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (
+      event.key === "e" ||
+      event.key === "+" ||
+      event.key === "-" ||
+      event.key === "."
+    ) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <div>
       <h3 className="mt-3">Change Allocation</h3>
@@ -120,12 +131,13 @@ const AllocationForm = () => {
           </div>
 
           <div className="col-md mt-2">
-            <LabledInput
+            <LabeledInput
               value={number}
               type="number"
               step="10"
               label={"Number"}
               disabled={action === "clear monthly budget"}
+              handleKeyDown={handleKeyDown}
               handleChange={handleChange}
             />
           </div>

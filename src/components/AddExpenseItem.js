@@ -12,7 +12,11 @@ export const AddExpenseItem = () => {
     cost: null,
   });
   const [itemIsAdding, setItemIsAdding] = useState(false);
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, expenses, budget } = useContext(AppContext);
+
+  const allExpenses = expenses.reduce((sum, expense) => {
+    return sum + +expense.cost;
+  }, 0);
 
   const showForm = () => {
     setItemIsAdding(true);
@@ -30,6 +34,15 @@ export const AddExpenseItem = () => {
 
   const handleAddExpense = () => {
     const { name, cost } = newExpense;
+    // if a new expense is too expensive
+    if ((allExpenses + +cost) > budget) {
+      dispatch({
+        type: "TOGGLE_REMAINING_LOW",
+        payload: true,
+      });
+      return;
+    }
+    // if name and cost of new expense indicated - update context
     if (name && cost) {
       dispatch({
         type: "ADD_NEW_EXPENSE",

@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
 
 export const TestTheme = () => {
-  const {  dispatch, backgroundColor, color } =
-    useContext(ThemeContext);
+  const { dispatch, backgroundColor, color } = useContext(ThemeContext);
   return (
     <div
       style={{
@@ -15,21 +14,20 @@ export const TestTheme = () => {
         margin: "20px",
       }}
     >
-      <span
-        style={{
-          border: "2px solid #084298",
-          borderRadius: "5px",
-          padding: "0 5px",
-        }}
-        className={"unselectable"}
-        type="checkbox"
-        onClick={(e) => {
-          e.preventDefault();
-          dispatch({ type: "toggleThemeMode" });
-        }}
-      >
-        Toggle night mode (react context)
-      </span>
+      <div className="form-check form-switch">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+          onChange={(e) => {
+            dispatch({ type: "toggleThemeMode" });
+          }}
+        />
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+          Night mode
+        </label>
+      </div>
     </div>
   );
 };

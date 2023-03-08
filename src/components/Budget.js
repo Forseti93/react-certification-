@@ -31,7 +31,6 @@ const Budget = () => {
       });
     } else {
       console.log("set not low");
-
       dispatch({
         type: "TOGGLE_REMAINING_LOW",
         payload: false,
