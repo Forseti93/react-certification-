@@ -108,7 +108,7 @@ const AllocationForm = () => {
   };
 
   return (
-    <div>
+    <div className="mb-3">
       <h3 className="mt-3">Change Allocation</h3>
       <div className="container mt-3">
         <div className="row">
